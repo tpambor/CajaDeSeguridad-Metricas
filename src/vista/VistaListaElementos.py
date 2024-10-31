@@ -3,6 +3,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, QSize
 from functools import partial
 
+PATH_LOGO = "src/recursos/cajaDeSeguridadLogo.png"
 
 class VistaListaElementos(QWidget):
     #Ventana que muestra la lista de autos
@@ -26,13 +27,13 @@ class VistaListaElementos(QWidget):
         #inicializamos la ventana
         self.setWindowTitle(self.title)
         self.setFixedSize(self.width, self.height)
-        self.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
+        self.setWindowIcon(QIcon(PATH_LOGO))
          
         self.distribuidor_base = QVBoxLayout(self)
 
         #Creación del logo de encabezado
         self.logo=QLabel(self)
-        self.pixmap = QPixmap("src/recursos/cajaDeSeguridadLogo.png")
+        self.pixmap = QPixmap(PATH_LOGO)
         self.pixmap = self.pixmap.scaled(488,158, Qt.KeepAspectRatio)
         self.logo.setPixmap(self.pixmap)
         self.logo.setAlignment(Qt.AlignCenter)
@@ -208,7 +209,7 @@ class VistaListaElementos(QWidget):
         mensaje_confirmacion.setText(
             "¿Esta seguro de que desea borrar este elemento?\nRecuerde que esta acción es irreversible")
         mensaje_confirmacion.setWindowTitle("¿Desea borrar este elemento?")
-        mensaje_confirmacion.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
+        mensaje_confirmacion.setWindowIcon(QIcon(PATH_LOGO))
         mensaje_confirmacion.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         respuesta = mensaje_confirmacion.exec_()
         if respuesta == QMessageBox.Yes:

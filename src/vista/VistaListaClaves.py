@@ -6,6 +6,7 @@ from functools import partial
 
 from src.vista.VistaCrearClave import VistaCrearClave
 
+PATH_LOGO = "src/recursos/cajaDeSeguridadLogo.png"
 
 class VistaListaClaves(QWidget):
     #Ventana que muestra la lista de claves
@@ -31,7 +32,7 @@ class VistaListaClaves(QWidget):
         # inicializamos la ventana
         self.setWindowTitle(self.titulo)
         self.setFixedSize(self.width, self.height)
-        self.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
+        self.setWindowIcon(QIcon(PATH_LOGO))
          
         self.distribuidor_base = QVBoxLayout(self)        
 
@@ -153,7 +154,7 @@ class VistaListaClaves(QWidget):
         mensaje_confirmacion.setIcon(QMessageBox.Question)
         mensaje_confirmacion.setText("¿Esta seguro de que desea eliminar esta clave?\nRecuerde que esta acción es irreversible")
         mensaje_confirmacion.setWindowTitle("¿Desea borrar esta clave?")
-        mensaje_confirmacion.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
+        mensaje_confirmacion.setWindowIcon(QIcon(PATH_LOGO))
         mensaje_confirmacion.setStandardButtons(QMessageBox.Yes | QMessageBox.No ) 
         respuesta=mensaje_confirmacion.exec_()
         if respuesta == QMessageBox.Yes:
@@ -184,7 +185,7 @@ class VistaListaClaves(QWidget):
             mensaje_error.setIcon(QMessageBox.Question)
             mensaje_error.setText("Error : " + error)
             mensaje_error.setWindowTitle("Error guardar clave")
-            mensaje_error.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
+            mensaje_error.setWindowIcon(QIcon(PATH_LOGO))
             mensaje_error.setStandardButtons(QMessageBox.Ok ) 
             respuesta=mensaje_error.exec_()
 
