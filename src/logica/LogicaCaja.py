@@ -48,6 +48,17 @@ ERROR_CCV_FORMATO = "El CCV sólo debe contener dígitos"
 ERROR_CCV_3 = "El CCV no debe tener menos de 3 dígitos"
 ERROR_CCV_4 = "El CCV no debe tener más de 4 dígitos"
 
+REGEX_EMAIL = r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+REGEX_URL = r"^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$"
+REGEX_NUMERO = r"[0-9]"
+REGEX_NUMEROS = r"^[0-9]+$"
+REGEX_MAYUSCULA = r"[A-ZÑÉÓÚÍÜ]"
+REGEX_MAYUSCULAS = r"^[A-ZÑÁÉÓÚÍÜ ]+$"
+REGEX_MINUSCULA = r"[a-zñéóúíü]"
+REGEX_C_ESPECIAL = r"[?\-*!@#$/(){}=.,;:]"
+REGEX_FECHA = r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$"
+REGEX_TELEFONO = r"^(\(\+?\d+\)|\+?[\d A-Z]*)[\d A-Z]*(\([\d A-Z]+\))*[\d A-Z]*$"
+
 class LogicaCaja(FachadaCajaDeSeguridad):
 
     def __init__(self)->None:
@@ -323,11 +334,11 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             return ERROR_NOTAS_3
         if len(notas) > 512:
             return ERROR_NOTAS_512
-        if not re.match(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", email):
+        if not re.match(REGEX_EMAIL, email):
             return ERROR_FORMATO_EMAIL
         if len(url) > 512:
             return ERROR_URL_512
-        if not re.match(r"^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$", url):
+        if not re.match(REGEX_URL, url):
             return ERROR_FORMAT_URL
         
         # Si estamos creando o si estamos editanto y el nombre de la clave ha cambiado, tenemos que comprabar que una clave con este nombre aun no existe
@@ -425,13 +436,13 @@ class LogicaCaja(FachadaCajaDeSeguridad):
         for x in self.caja.claves:
             if len(x.clave) < 8:
                 continue
-            if not re.search(r"[0-9]", x.clave):
+            if not re.search(REGEX_NUMERO, x.clave):
                 continue
-            if not re.search(r"[A-ZÑÉÓÚÍÜ]", x.clave):
+            if not re.search(REGEX_MAYUSCULA, x.clave):
                 continue
-            if not re.search(r"[a-zñéóúíü]", x.clave):
+            if not re.search(REGEX_MINUSCULA, x.clave):
                 continue
-            if not re.search(r"[?\-*!@#$/(){}=.,;:]", x.clave):
+            if not re.search(REGEX_C_ESPECIAL, x.clave):
                 continue
             if " " in x.clave:
                 continue
@@ -480,31 +491,31 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             return ERROR_TITULAR_3
         if len(titular) > 255:
             return ERROR_TITULAR_255
-        if not re.match(r"^[A-ZÑÁÉÓÚÍÜ ]+$", titular):
+        if not re.match(REGEX_MAYUSCULAS, titular):
             return ERROR_TITULAR_FORMATO
         if len(notas) < 3:
             return ERROR_NOTAS_3
         if len(notas) > 512:
             return ERROR_NOTAS_512
-        if not re.match(r"^[0-9]+$", numero):
+        if not re.match(REGEX_NUMEROS, numero):
             return ERROR_NUMERO_DIGITOS
         if len(numero) < 3:
             return ERROR_NUMERO_3
         if len(numero) > 255:
             return ERROR_NUMERO_255
-        if not re.match(r"^[0-9]+$", ccv):
+        if not re.match(REGEX_NUMEROS, ccv):
             return ERROR_CCV_FORMATO
         if len(ccv) < 3:
             return ERROR_CCV_3
         if len(ccv) > 4:
             return ERROR_CCV_4
-        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fvencimiento):
+        if not re.match(REGEX_FECHA, fvencimiento):
             return ERROR_FECHA_VENCIMIENTO
         if len(telefono) < 3:
             return ERROR_TELEFONO_3
         if len(telefono) > 255:
             return ERROR_TELEFONO_255
-        if not re.match(r"^(\(\+?\d+\)|\+?[\d A-Z]*)[\d A-Z]*(\([\d A-Z]+\))*[\d A-Z]*$", telefono):
+        if not re.match(REGEX_TELEFONO, telefono):
             return ERROR_TELEFONO_FORMATO
         if len(direccion) < 3:
             return ERROR_DIRECCION_3
@@ -602,17 +613,17 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             return ERROR_NOMBRE_COMPLETO_3
         if len(nombre_completo) > 255:
             return ERROR_NOMBRE_COMPLETO_255
-        if not re.match(r"^[0-9]+$", numero):
+        if not re.match(REGEX_NUMEROS, numero):
             return ERROR_NUMERO_DIGITOS
         if len(numero) < 3:
             return ERROR_NUMERO_3
         if len(numero) > 20:
             return ERROR_NUMERO_20
-        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fvencimiento):
+        if not re.match(REGEX_FECHA, fvencimiento):
             return ERROR_FECHA_VENCIMIENTO
-        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fexpedicion):
+        if not re.match(REGEX_FECHA, fexpedicion):
             return ERROR_FECHA_EXPEDICION
-        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fnacimiento):
+        if not re.match(REGEX_FECHA, fnacimiento):
             return ERROR_FECHA_NACIMIENTO
         
         # Si estamos creando o si estamos editanto y el nombre de la clave ha cambiado, tenemos que comprabar que una clave con este nombre aun no existe
