@@ -1,7 +1,6 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QPushButton, QScrollArea, QHBoxLayout, QGroupBox
+from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtCore import Qt, QSize
 
 
 class VistaReporteSeguridad(QWidget):

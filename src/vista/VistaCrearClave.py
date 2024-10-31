@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import * 
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QDialog, QListWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QGroupBox, QHBoxLayout
+from PyQt5.QtGui import QIcon
 
 
 class VistaCrearClave(QDialog):

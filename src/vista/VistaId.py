@@ -1,7 +1,6 @@
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QLineEdit, QTextEdit, QPushButton, QMessageBox, QDateEdit
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt, QDate
 from datetime import datetime
 
 
@@ -123,9 +122,9 @@ class VistaId(QWidget):
             self.texto_nombre_elemento.setText(self.elemento["nombre_elemento"])
             self.texto_numero.setText(self.elemento["numero"])
             self.texto_nombre_completo.setText(self.elemento["nombre"])
-            self.fnacimiento.setDate(QtCore.QDate.fromString(str(self.elemento["fecha_nacimiento"]), "yyyy-MM-dd"))
-            self.fvencimiento.setDate(QtCore.QDate.fromString(str(self.elemento["fecha_venc"]), "yyyy-MM-dd"))
-            self.fexpedicion.setDate(QtCore.QDate.fromString(str(self.elemento["fecha_exp"]), "yyyy-MM-dd"))
+            self.fnacimiento.setDate(QDate.fromString(str(self.elemento["fecha_nacimiento"]), "yyyy-MM-dd"))
+            self.fvencimiento.setDate(QDate.fromString(str(self.elemento["fecha_venc"]), "yyyy-MM-dd"))
+            self.fexpedicion.setDate(QDate.fromString(str(self.elemento["fecha_exp"]), "yyyy-MM-dd"))
             self.texto_notas.setText(str(self.elemento["notas"]))
 
     def volver(self):

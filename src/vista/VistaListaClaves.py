@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import * 
-from PyQt5.QtGui import * 
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QPushButton, QScrollArea, QHBoxLayout, QGroupBox, QMessageBox
+from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtCore import Qt
 
 from functools import partial
 
