@@ -4,10 +4,49 @@ from datetime import datetime, timedelta
 from typing import List
 
 from .typing import TipoClaveFavorita, TipoElemento, TipoReporte
-from src.logica.FachadaCajaDeSeguridad import FachadaCajaDeSeguridad
+from src.logica.FachadaCajaDeSeguridad import FachadaCajaDeSeguridad, TIPO_IDENTIFICACION, TIPO_TARJETA, TIPO_SECRETO, TIPO_LOGIN
 
 from src.modelo.declarative_base import engine, Base, Session
 from src.modelo import Caja, ClaveFavorita, Elemento, Tarjeta, Identificacion, Login, Secreto
+
+ERROR_NOMBRE_1 = "El nombre no debe tener menos de 1 caracter"
+ERROR_NOMBRE_255 = "El nombre no debe tener más de 255 caracteres"
+ERROR_CLAVE_3 = "La clave no debe tener menos de 3 caracteres"
+ERROR_CLAVE_255 = "La clave no debe tener más de 255 caracteres"
+ERROR_PISTA_3 = "La pista no debe tener menos de 3 caracteres"
+ERROR_PISTA_255 = "La pista no debe tener más de 255 caracteres"
+ERROR_ELEMENTO_EXISTENTE = "Ya existe un elemento con este nombre"
+ERROR_CLAVE_UTILIZADA = "No se puede eliminar una clave utilizada"
+ERROR_USUARIO_1 = "El usuario no debe tener menos de 1 caracter"
+ERROR_USUARIO_255 = "El usuario no debe tener más de 255 caracteres"
+ERROR_NOTAS_3 = "Las notas no deben tener menos de 3 caracteres"
+ERROR_NOTAS_512 = "Las notas no deben tener más de 512 caracteres"
+ERROR_FORMATO_EMAIL = "El email no tiene el formato correcto"
+ERROR_URL_512 = "La URL no debe tener más de 512 caracteres"
+ERROR_FORMAT_URL = "El url no tiene el formato correcto"
+ERROR_ASIGNADO_CLAVE = "Debe tener asignado una clave favorita"
+ERROR_SECRETO_3 = "El secreto no debe tener menos de 3 caracteres"
+ERROR_SECRETO_255 = "El secreto no debe tener más de 255 caracteres"
+ERROR_NOMBRE_COMPLETO_3 = "El nombre completo no debe tener menos de 3 caracteres"
+ERROR_NOMBRE_COMPLETO_255 = "El nombre completo no debe tener más de 255 caracteres"
+ERROR_NUMERO_DIGITOS = "El número sólo debe contener dígitos"
+ERROR_NUMERO_3 = "El número no debe tener menos de 3 dígitos"
+ERROR_NUMERO_20 = "El número no debe tener más de 20 dígitos"
+ERROR_NUMERO_255 = "El número no debe tener más de 255 dígitos"
+ERROR_TITULAR_3 = "El titular no debe tener menos de 3 caracteres"
+ERROR_TITULAR_255 = "El titular no debe tener más de 255 caracteres"
+ERROR_TITULAR_FORMATO = "El titular debe contener solo mayúsculas y espacios"
+ERROR_FECHA_VENCIMIENTO = "La fecha de vencimiento debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
+ERROR_FECHA_EXPEDICION = "La fecha de expedición debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
+ERROR_FECHA_NACIMIENTO = "La fecha de nacimiento debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
+ERROR_DIRECCION_3 = "La dirección no debe tener menos de 3 caracteres"
+ERROR_DIRECCION_255 = "La dirección no debe tener más de 255 caracteres"
+ERROR_TELEFONO_FORMATO = "El teléfono deber contener un número de teléfono, por ejemplo +57 (606) 7422736"
+ERROR_TELEFONO_3 = "El teléfono no debe tener menos de 3 caracteres"
+ERROR_TELEFONO_255 = "El teléfono no debe tener más de 255 caracteres"
+ERROR_CCV_FORMATO = "El CCV sólo debe contener dígitos"
+ERROR_CCV_3 = "El CCV no debe tener menos de 3 dígitos"
+ERROR_CCV_4 = "El CCV no debe tener más de 4 dígitos"
 
 class LogicaCaja(FachadaCajaDeSeguridad):
 
@@ -41,7 +80,7 @@ class LogicaCaja(FachadaCajaDeSeguridad):
         Retorna:
             (dict): Diccionario con los datos para la interfaz gráfica
         '''
-        if elemento.tipo == "Identificación":
+        if elemento.tipo == TIPO_IDENTIFICACION:
             return TipoElemento(nombre_elemento=elemento.nombre, 
                                 notas=elemento.nota, 
                                 tipo=elemento.tipo,
@@ -50,14 +89,14 @@ class LogicaCaja(FachadaCajaDeSeguridad):
                                 fecha_venc=elemento.vencimiento.isoformat(),
                                 fecha_nacimiento=elemento.nacimiento.isoformat(),
                                 fecha_exp=elemento.expedicion.isoformat())
-        if elemento.tipo == "Secreto":
+        if elemento.tipo == TIPO_SECRETO:
             return TipoElemento(nombre_elemento=elemento.nombre, 
                                 notas=elemento.nota, 
                                 tipo=elemento.tipo,
                                 clave=elemento.clave.nombre, 
                                 secreto=elemento.secreto,
                                 ) 
-        if elemento.tipo == "Login":
+        if elemento.tipo == TIPO_LOGIN:
             return TipoElemento(nombre_elemento=elemento.nombre, 
                                 notas=elemento.nota, 
                                 tipo=elemento.tipo,
@@ -66,7 +105,7 @@ class LogicaCaja(FachadaCajaDeSeguridad):
                                 usuario=elemento.usuario,
                                 url=elemento.url, 
                                 )    
-        if elemento.tipo == "Tarjeta":
+        if elemento.tipo == TIPO_TARJETA:
             return TipoElemento(nombre_elemento=elemento.nombre, 
                                 notas=elemento.nota, 
                                 tipo=elemento.tipo,
@@ -161,7 +200,7 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             self.caja.elementos.join(Secreto).filter(Secreto.clave == clave).count()
         )
         if total_elementos > 0:
-            return "No se puede eliminar una clave utilizada"
+            return ERROR_CLAVE_UTILIZADA
 
         return ""
 
@@ -187,23 +226,23 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             validación o una cadena de caracteres vacía si no hay errores.
         '''
         if len(nombre) < 1:
-            return "El nombre no debe tener menos de 1 caracteres"
+            return ERROR_NOMBRE_1
         if len (nombre) > 255:
-            return "El nombre no debe tener más de 255 caracteres"
+            return ERROR_NOMBRE_255
         if len(clave) < 3:
-            return "La clave no debe tener menos de 3 caracteres"
+            return ERROR_CLAVE_3
         if len (clave) > 255:
-            return "La clave no debe tener más de 255 caracteres"
+            return ERROR_CLAVE_255
         if len(pista) < 3:
-            return "La pista no debe tener menos de 3 caracteres"
+            return ERROR_PISTA_3
         if len (pista) > 255:
-            return "La pista no debe tener más de 255 caracteres"
+            return ERROR_PISTA_255
 
         # Si estamos creando o si estamos editanto y el nombre de la clave ha cambiado, tenemos que comprabar que una clave con este nombre aun no existe
         comprabar_nombre = (id == -1) or (nombre != self.dar_clave_favorita(id)["nombre"])
 
         if comprabar_nombre and (self.caja.claves.filter(ClaveFavorita.nombre==nombre).count() > 0):
-            return "Ya existe un elemento con este nombre"
+            return ERROR_ELEMENTO_EXISTENTE
 
         return ""
 
@@ -273,32 +312,32 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             validación o una cadena de caracteres vacía si no hay errores.
         '''
         if len(nombre) < 1:
-            return "El nombre no debe tener menos de 1 caracteres"
+            return ERROR_NOMBRE_1
         if len(nombre) > 255:
-            return "El nombre no debe tener más de 255 caracteres"
+            return ERROR_NOMBRE_255
         if len(usuario) < 1:
-            return "El usuario no debe tener menos de 1 caracteres"
+            return ERROR_USUARIO_1
         if len(usuario) > 255:
-            return "El usuario no debe tener más de 255 caracteres"
+            return ERROR_USUARIO_255
         if len(notas) < 3:
-            return "Las notas no deben tener menos de 3 caracteres"
+            return ERROR_NOTAS_3
         if len(notas) > 512:
-            return "Las notas no deben tener más de 512 caracteres"
-        if not re.match("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", email):
-            return "El email no tiene el formato correcto"
+            return ERROR_NOTAS_512
+        if not re.match(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", email):
+            return ERROR_FORMATO_EMAIL
         if len(url) > 512:
-            return "La URL no debe tener más de 512 caracteres"
-        if not re.match("^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$", url):
-            return "El url no tiene el formato correcto"
+            return ERROR_URL_512
+        if not re.match(r"^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$", url):
+            return ERROR_FORMAT_URL
         
         # Si estamos creando o si estamos editanto y el nombre de la clave ha cambiado, tenemos que comprabar que una clave con este nombre aun no existe
         comprabar_nombre = (id == -1) or (nombre != self.dar_elemento(id)["nombre_elemento"])
 
         if comprabar_nombre and (self.caja.elementos.filter(Elemento.nombre==nombre).count() > 0):
-            return "Ya existe un elemento con este nombre"
+            return ERROR_ELEMENTO_EXISTENTE
         
         if self.caja.claves.filter(ClaveFavorita.nombre==password).count() < 1:
-            return "Debe tener asignado una clave favorita"
+            return ERROR_ASIGNADO_CLAVE
         
         return ""
 
@@ -352,8 +391,8 @@ class LogicaCaja(FachadaCajaDeSeguridad):
         hoy_mas_3_meses=datetime.today().date()+timedelta(days=3*30)
         tarjetas_avencer=self.caja.elementos.join(Tarjeta).filter(Tarjeta.vencimiento<hoy_mas_3_meses).count()
         id_avencer=self.caja.elementos.join(Identificacion).filter(Identificacion.vencimiento<hoy_mas_3_meses).count()
-        numero_ids=self.caja.elementos.filter(Elemento.tipo == "Identificación").count()
-        numero_tarjetas=self.caja.elementos.filter(Elemento.tipo == "Tarjeta").count()
+        numero_ids=self.caja.elementos.filter(Elemento.tipo == TIPO_IDENTIFICACION).count()
+        numero_tarjetas=self.caja.elementos.filter(Elemento.tipo == TIPO_TARJETA).count()
         elementos_que_puede_vencer=numero_ids+numero_tarjetas
         elementos_avencer=tarjetas_avencer+id_avencer
         if elementos_que_puede_vencer== 0:
@@ -386,13 +425,13 @@ class LogicaCaja(FachadaCajaDeSeguridad):
         for x in self.caja.claves:
             if len(x.clave) < 8:
                 continue
-            if not re.search("[0-9]", x.clave):
+            if not re.search(r"[0-9]", x.clave):
                 continue
-            if not re.search("[A-ZÑÉÓÚÍÜ]", x.clave):
+            if not re.search(r"[A-ZÑÉÓÚÍÜ]", x.clave):
                 continue
-            if not re.search("[a-zñéóúíü]", x.clave):
+            if not re.search(r"[a-zñéóúíü]", x.clave):
                 continue
-            if not re.search("[?\-*!@#$/(){}=.,;:]", x.clave):
+            if not re.search(r"[?\-*!@#$/(){}=.,;:]", x.clave):
                 continue
             if " " in x.clave:
                 continue
@@ -406,10 +445,10 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             sc= seguras/total_claves
         
         return TipoReporte(
-            logins=self.caja.elementos.filter(Elemento.tipo == "Login").count() ,
+            logins=self.caja.elementos.filter(Elemento.tipo == TIPO_LOGIN).count() ,
             ids=numero_ids,
             tarjetas=numero_tarjetas,
-            secretos=self.caja.elementos.filter(Elemento.tipo == "Secreto").count(),
+            secretos=self.caja.elementos.filter(Elemento.tipo == TIPO_SECRETO).count(),
             inseguras=total_claves-seguras,
             avencer=elementos_avencer,
             masdeuna=repetida,
@@ -434,51 +473,51 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             validación o una cadena de caracteres vacía si no hay errores.
         '''
         if len(nombre_elemento) < 1:
-            return "El nombre no debe tener menos de 1 caracter"
+            return ERROR_NOMBRE_1
         if len(nombre_elemento) > 255:
-            return "El nombre no debe tener más de 255 caracteres"
+            return ERROR_NOMBRE_255
         if len(titular) < 3:
-            return "El titular no debe tener menos de 3 caracteres"
+            return ERROR_TITULAR_3
         if len(titular) > 255:
-            return "El titular no debe tener más de 255 caracteres"
-        if not re.match("^[A-ZÑÁÉÓÚÍÜ ]+$", titular):
-            return "El titular debe contener solo mayúsculas y espacios"
+            return ERROR_TITULAR_255
+        if not re.match(r"^[A-ZÑÁÉÓÚÍÜ ]+$", titular):
+            return ERROR_TITULAR_FORMATO
         if len(notas) < 3:
-            return "Las notas no deben tener menos de 3 caracteres"
+            return ERROR_NOTAS_3
         if len(notas) > 512:
-            return "Las notas no deben tener más de 512 caracteres"
-        if not re.match("^[0-9]+$", numero):
-            return "El número sólo debe contener dígitos"
+            return ERROR_NOTAS_512
+        if not re.match(r"^[0-9]+$", numero):
+            return ERROR_NUMERO_DIGITOS
         if len(numero) < 3:
-            return "El número no debe tener menos de 3 dígitos"
+            return ERROR_NUMERO_3
         if len(numero) > 255:
-            return "El número no debe tener más de 255 dígitos"
-        if not re.match("^[0-9]+$", ccv):
-            return "El CCV sólo debe contener dígitos"
+            return ERROR_NUMERO_255
+        if not re.match(r"^[0-9]+$", ccv):
+            return ERROR_CCV_FORMATO
         if len(ccv) < 3:
-            return "El CCV no debe tener menos de 3 dígitos"
+            return ERROR_CCV_3
         if len(ccv) > 4:
-            return "El CCV no debe tener más de 4 dígitos"
-        if not re.match("^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fvencimiento):
-            return "La fecha de vencimiento debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
+            return ERROR_CCV_4
+        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fvencimiento):
+            return ERROR_FECHA_VENCIMIENTO
         if len(telefono) < 3:
-            return "El teléfono no debe tener menos de 3 caracteres"
+            return ERROR_TELEFONO_3
         if len(telefono) > 255:
-            return "El teléfono no debe tener más de 255 caracteres"
-        if not re.match("^(\(\+?\d+\)|\+?[\d A-Z]*)[\d A-Z]*(\([\d A-Z]+\))*[\d A-Z]*$", telefono):
-            return "El teléfono deber contener un número de teléfono, por ejemplo +57 (606) 7422736"
+            return ERROR_TELEFONO_255
+        if not re.match(r"^(\(\+?\d+\)|\+?[\d A-Z]*)[\d A-Z]*(\([\d A-Z]+\))*[\d A-Z]*$", telefono):
+            return ERROR_TELEFONO_FORMATO
         if len(direccion) < 3:
-            return "La dirección no debe tener menos de 3 caracteres"
+            return ERROR_DIRECCION_3
         if len(direccion) > 255:
-            return "La dirección no debe tener más de 255 caracteres"
+            return ERROR_DIRECCION_255
         if self.caja.claves.filter(ClaveFavorita.nombre==clave).count() < 1:
-            return "Debe tener asignado una clave favorita"
+            return ERROR_ASIGNADO_CLAVE
         
         # Si estamos creando o si estamos editanto y el nombre de la tarjeta ha cambiado, tenemos que comprabar que un elemento con este nombre aun no existe
         comprabar_nombre = (id == -1) or (nombre_elemento != self.dar_elemento(id)["nombre_elemento"])
 
         if comprabar_nombre and (self.caja.elementos.filter(Elemento.nombre==nombre_elemento).count() > 0):
-            return "Ya existe un elemento con este nombre"
+            return ERROR_ELEMENTO_EXISTENTE
 
         return ""
 
@@ -552,35 +591,35 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             validación o una cadena de caracteres vacía si no hay errores.
         '''
         if len(nombre_elemento) < 1:
-            return "El nombre no debe tener menos de 1 caracter"
+            return ERROR_NOMBRE_1
         if len(nombre_elemento) > 255:
-            return "El nombre no debe tener más de 255 caracteres"
+            return ERROR_NOMBRE_255
         if len(notas) < 3:
-            return "Las notas no deben tener menos de 3 caracteres"
+            return ERROR_NOTAS_3
         if len(notas) > 512:
-            return "Las notas no deben tener más de 512 caracteres"
+            return ERROR_NOTAS_512
         if len(nombre_completo) < 3:
-            return "El nombre completo no debe tener menos de 3 caracteres"
+            return ERROR_NOMBRE_COMPLETO_3
         if len(nombre_completo) > 255:
-            return "El nombre completo no debe tener más de 255 caracteres"
-        if not re.match("^[0-9]+$", numero):
-            return "El número sólo debe contener dígitos"
+            return ERROR_NOMBRE_COMPLETO_255
+        if not re.match(r"^[0-9]+$", numero):
+            return ERROR_NUMERO_DIGITOS
         if len(numero) < 3:
-            return "El número no debe tener menos de 3 dígitos"
+            return ERROR_NUMERO_3
         if len(numero) > 20:
-            return "El número no debe tener más de 20 dígitos"
-        if not re.match("^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fvencimiento):
-            return "La fecha de vencimiento debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
-        if not re.match("^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fexpedicion):
-            return "La fecha de expedición debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
-        if not re.match("^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fnacimiento):
-            return "La fecha de nacimiento debe tener el formato YYYY-MM-DD, por ejemplo 2023-01-28"
+            return ERROR_NUMERO_20
+        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fvencimiento):
+            return ERROR_FECHA_VENCIMIENTO
+        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fexpedicion):
+            return ERROR_FECHA_EXPEDICION
+        if not re.match(r"^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$", fnacimiento):
+            return ERROR_FECHA_NACIMIENTO
         
         # Si estamos creando o si estamos editanto y el nombre de la clave ha cambiado, tenemos que comprabar que una clave con este nombre aun no existe
         comprabar_nombre = (id == -1) or (nombre_elemento != self.dar_elemento(id)["nombre_elemento"])
 
         if comprabar_nombre and (self.caja.elementos.filter(Elemento.nombre==nombre_elemento).count() > 0):
-            return "Ya existe un elemento con este nombre"
+            return ERROR_ELEMENTO_EXISTENTE
         return ""
 
     def crear_id(self, nombre_elemento: str , numero: str, nombre_completo: str, fnacimiento: str, fexpedicion: str, fvencimiento: str, notas: str):
@@ -640,25 +679,25 @@ class LogicaCaja(FachadaCajaDeSeguridad):
             validación o una cadena de caracteres vacía si no hay errores.
         '''
         if len(nombre) < 1:
-            return "El nombre no debe tener menos de 1 caracter"
+            return ERROR_NOMBRE_1
         if len(nombre) > 255:
-            return "El nombre no debe tener más de 255 caracteres"
+            return ERROR_NOMBRE_255
         if len(notas) < 3:
-            return "Las notas no deben tener menos de 3 caracteres"
+            return ERROR_NOTAS_3
         if len(notas) > 512:
-            return "Las notas no deben tener más de 512 caracteres"
+            return ERROR_NOTAS_512
         if len(secreto) < 3:
-            return "El secreto no debe tener menos de 3 caracteres"
+            return ERROR_SECRETO_3
         if len(secreto) > 255:
-            return "El secreto no debe tener más de 255 caracteres"
+            return ERROR_SECRETO_255
         if self.caja.claves.filter(ClaveFavorita.nombre==clave).count() < 1:
-            return "Debe tener asignado una clave favorita"
+            return ERROR_ASIGNADO_CLAVE
 
         # Si estamos creando o si estamos editanto y el nombre de la clave ha cambiado, tenemos que comprabar que una clave con este nombre aun no existe
         comprabar_nombre = (id == -1) or (nombre != self.dar_elemento(id)["nombre_elemento"])
 
         if comprabar_nombre and (self.caja.elementos.filter(Elemento.nombre==nombre).count() > 0):
-            return "Ya existe un elemento con este nombre"
+            return ERROR_ELEMENTO_EXISTENTE
         return ""
 
     def crear_secreto(self, nombre: str, secreto: str, clave: str, notas: str):
