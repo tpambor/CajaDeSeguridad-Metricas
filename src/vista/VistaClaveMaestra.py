@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QGridLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QWidget
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 
 
 class VistaClaveMaestra(QDialog):

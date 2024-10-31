@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import * 
-from PyQt5.QtGui import * 
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QDialog, QGridLayout, QLabel, QRadioButton, QPushButton, QGroupBox, QHBoxLayout, QListWidget
+from PyQt5.QtGui import QIcon 
+from PyQt5.QtCore import Qt
 
 
 class VistaSeleccionElemento(QDialog):
