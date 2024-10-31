@@ -1,0 +1,12 @@
+# .coveragerc to control coverage.py
+[run]
+relative_files = True
+omit =
+    */site-packages/*
+    */dist-packages/*
+    tests/*
+
+[report]
+exclude_lines =
+    raise NotImplementedError
+    pragma: no cover
