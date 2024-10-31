@@ -41,7 +41,6 @@ class VistaClaveMaestra(QDialog):
         self.texto_clave = QLineEdit(self)
         self.texto_clave.setEchoMode(QLineEdit.Password)
         self.distribuidor_clave.addWidget(self.texto_clave, numero_fila, 1)
-        numero_fila + 1
 
         # Creación de la caja con los botones
         self.widget_botones = QWidget()

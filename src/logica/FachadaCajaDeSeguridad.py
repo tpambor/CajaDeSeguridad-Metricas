@@ -1,3 +1,10 @@
+TIPO_IDENTIFICACION = 'Identificación'
+TIPO_TARJETA = 'Tarjeta'
+TIPO_SECRETO = 'Secreto'
+TIPO_LOGIN = 'Login'
+
+ERROR_NO_IMPLEMENTADO = "Método no implementado"
+
 '''
 Esta clase es la fachada con los métodos a implementar en la lógica
 '''
@@ -8,7 +15,7 @@ class FachadaCajaDeSeguridad:
         Retorna:
             (list): La lista con los dict o los objetos de los elementos
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def dar_elemento(self, id_elemento):
         ''' Retorna un elemento de la caja de seguridad
@@ -17,14 +24,14 @@ class FachadaCajaDeSeguridad:
         Retorna:
             (dict): El elemento identificado con id_elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def dar_claves_favoritas(self):
         ''' Retorna la lita de claves favoritas
         Retorna:
             (list): La lista con los dict o los objetos de las claves favoritas
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def dar_clave_favorita(self, id_clave):
         ''' Retorna una clave favoritas
@@ -33,7 +40,7 @@ class FachadaCajaDeSeguridad:
         Retorna:
             (dict): La clave favorita identificada con id_clave
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def dar_clave(self, nombre_clave):
         ''' Retorna la clave asignada a una clave favorita
@@ -42,21 +49,21 @@ class FachadaCajaDeSeguridad:
         Retorna:
             (string): La clave asignada a la clave favorita del parámetro
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def eliminar_elemento(self, id):
         ''' Elimina un elemento de la lista de elementos
         Parámetros:
             id (int): El id del elemento a eliminar_clave
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def dar_claveMaestra(self):
         ''' Retorna la clave maestra de la caja de seguridad
         Rertorna:
             (string): La clave maestra de la caja de seguridad
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def crear_login(self, nombre, email, usuario, password, url, notas):
         ''' Crea un elemento login
@@ -68,7 +75,7 @@ class FachadaCajaDeSeguridad:
             url (string): El URL del login
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def validar_crear_editar_login(self, id, nombre, email, usuario, password, url, notas):
         ''' Valida que un login se pueda crear o editar
@@ -83,7 +90,7 @@ class FachadaCajaDeSeguridad:
             (string): El mensaje de error generado al presentarse errores en la 
             validación o una cadena de caracteres vacía si no hay errores.
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def editar_login(self, id, nombre, email, usuario, password, url, notas):
         ''' Edita un elemento login
@@ -95,7 +102,7 @@ class FachadaCajaDeSeguridad:
             url (string): El URL del login
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def crear_id(self, nombre_elemento, numero, nombre_completo, fnacimiento, fexpedicion, fvencimiento, notas):
         ''' Crea un elemento identificación
@@ -108,7 +115,7 @@ class FachadaCajaDeSeguridad:
             fvencimiento (string): La feha de vencimiento en la identificación
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def validar_crear_editar_id(self, id, nombre_elemento, numero, nombre_completo, fnacimiento, fexpedicion, fvencimiento, notas):
         ''' Valida que una identificación se pueda crear o editar
@@ -124,7 +131,7 @@ class FachadaCajaDeSeguridad:
             (string): El mensaje de error generado al presentarse errores en la 
             validación o una cadena de caracteres vacía si no hay errores.
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def editar_id(self, id,nombre_elemento, numero, nombre_completo, fnacimiento, fexpedicion, fvencimiento, notas):
         ''' Edita un elemento identificación
@@ -137,7 +144,7 @@ class FachadaCajaDeSeguridad:
             fvencimiento (string): La feha de vencimiento en la identificación
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def crear_tarjeta(self, nombre_elemento, numero, titular, fvencimiento, ccv, clave, direccion, telefono, notas):
         ''' Crea un elemento tarjeta
@@ -152,7 +159,7 @@ class FachadaCajaDeSeguridad:
             telefono (string): El número de teléfono del titular de la tarjeta
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def validar_crear_editar_tarjeta(self, id, nombre_elemento, numero, titular, fvencimiento, ccv, clave, direccion, telefono, notas):
         ''' Valida que una tarjeta se pueda crear o editar
@@ -170,7 +177,7 @@ class FachadaCajaDeSeguridad:
             (string): El mensaje de error generado al presentarse errores en la 
             validación o una cadena de caracteres vacía si no hay errores.
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def editar_tarjeta(self, id, nombre_elemento, numero, titular, fvencimiento, ccv, clave, direccion, telefono, notas):
         ''' Edita un elemento tarjeta
@@ -185,7 +192,7 @@ class FachadaCajaDeSeguridad:
             telefono (string): El número de teléfono del titular de la tarjeta
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def crear_secreto(self, nombre, secreto, clave, notas):
         ''' Crea un elemento secreto
@@ -195,7 +202,7 @@ class FachadaCajaDeSeguridad:
             clave (string): El nombre de clave favorita del elemento
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def validar_crear_editar_secreto(self, id, nombre, secreto, clave, notas):
         ''' Valida que se pueda crear o editar un elemento secreto
@@ -208,7 +215,7 @@ class FachadaCajaDeSeguridad:
             (string): El mensaje de error generado al presentarse errores en la 
             validación o una cadena de caracteres vacía si no hay errores.
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def editar_secreto(self, id, nombre, secreto, clave, notas):
         ''' Edita un elemento secreto
@@ -218,7 +225,7 @@ class FachadaCajaDeSeguridad:
             clave (string): El nombre de clave favorita del elemento
             notas (string): Las notas del elemento
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def crear_clave(self, nombre, clave, pista):
         ''' Crea una clave favorita
@@ -227,7 +234,7 @@ class FachadaCajaDeSeguridad:
             clave (string): El password o clae de la clave favorita
             pista (string): La pista para recordar la clave favorita
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def validar_crear_editar_clave(self, id, nombre, clave, pista):
         ''' Valida que se pueda crear o editar una clave favorita
@@ -239,7 +246,7 @@ class FachadaCajaDeSeguridad:
             (string): El mensaje de error generado al presentarse errores en la
             validación o una cadena de caracteres vacía si no hay errores.
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def editar_clave(self,id,  nombre, clave, pista):
         ''' Edita una clave favorita
@@ -248,14 +255,14 @@ class FachadaCajaDeSeguridad:
             clave (string): El password o clae de la clave favorita
             pista (string): La pista para recordar la clave favorita
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def generar_clave(self):
         ''' Genera una clave para una clave favorita
         Retorna:
             (string): La clave generada
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def validar_eliminar_clave(self, id):
         ''' Validar que se pueda eliminar una clave favorita
@@ -265,14 +272,14 @@ class FachadaCajaDeSeguridad:
             (string): El mensaje de error generado al presentarse errores en la 
             validación o una cadena de caracteres vacía si no hay errores.
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def eliminar_clave(self, id):
         ''' Elimina una clave favorita
         Parámetros:
             id (int): El id de la clave favorita a borrar
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
     def dar_reporte_seguridad(self):
         ''' Genera la información para el reporte de seguridad
@@ -280,4 +287,4 @@ class FachadaCajaDeSeguridad:
             (dict): Un mapa con los valores numéricos para las llaves logins, ids, tarjetas,
             secretos, inseguras, avencer, masdeuna y nivel que conforman el reporte
         '''
-        raise NotImplementedError("Método no implementado")
+        raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
