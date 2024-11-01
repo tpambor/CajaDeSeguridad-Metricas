@@ -77,4 +77,3 @@ class VistaClaveMaestra(QDialog):
         mensaje_error.setWindowTitle("Error clave maesra")
         mensaje_error.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
         mensaje_error.setStandardButtons(QMessageBox.Ok)
-        respuesta = mensaje_error.exec_()

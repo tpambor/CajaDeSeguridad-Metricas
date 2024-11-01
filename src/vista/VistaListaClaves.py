@@ -187,7 +187,6 @@ class VistaListaClaves(QWidget):
             mensaje_error.setWindowTitle("Error guardar clave")
             mensaje_error.setWindowIcon(QIcon(PATH_LOGO))
             mensaje_error.setStandardButtons(QMessageBox.Ok ) 
-            respuesta=mensaje_error.exec_()
 
     def closeEvent(self, event):
         self.hide()

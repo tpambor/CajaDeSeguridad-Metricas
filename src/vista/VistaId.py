@@ -153,7 +153,6 @@ class VistaId(QWidget):
         mensaje_error.setWindowTitle("Error al guardar")
         mensaje_error.setWindowIcon(QIcon("src/recursos/cajaDeSeguridadLogo.png"))
         mensaje_error.setStandardButtons(QMessageBox.Ok ) 
-        respuesta=mensaje_error.exec_()
 
     def closeEvent(self, event):
         self.hide()
