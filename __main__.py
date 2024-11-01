@@ -7,5 +7,5 @@ if __name__ == '__main__':
 
     logica = LogicaCaja()
 
-    app = App_CajaDeSeguridad(sys.argv, logica)
+    app = AppCajaDeSeguridad(sys.argv, logica)
     sys.exit(app.exec_())

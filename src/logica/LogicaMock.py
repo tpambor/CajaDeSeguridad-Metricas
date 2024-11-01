@@ -49,7 +49,7 @@ class LogicaMock(FachadaCajaDeSeguridad):
     def eliminar_elemento(self, id):
         del self.elementos[id]
 
-    def dar_claveMaestra(self):
+    def dar_clave_maestra(self):
         return self.clave_maestra
 
     def crear_login(self, nombre, email, usuario, password, url, notas):

@@ -31,7 +31,7 @@ class App_CajaDeSeguridad(QApplication):
         Esta función inicializa la ventana de la clave maestra
         """
         self.vista_clave_maestra = VistaClaveMaestra(self)
-        self.vista_clave_maestra.mostrar_clave(self.logica.dar_claveMaestra())
+        self.vista_clave_maestra.mostrar_clave(self.logica.dar_clave_maestra())
 
     def mostrar_vista_lista_elementos(self):
         """
