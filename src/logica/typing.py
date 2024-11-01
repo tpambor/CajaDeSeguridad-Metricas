@@ -1,14 +1,6 @@
 # Type hints para la FachadaCajaDeSeguridad
 
-import sys
-
-# TypedDict agrega sugerencias de tipo a un diccionario. Disponible a partir de python 3.8.
-# En tiempo de ejecución es solo un dict.
-if sys.version_info >= (3, 8):
-    from typing import TypedDict # pragma: no cover
-else:
-    def TypedDict(name, kv, total=True): # pragma: no cover
-        return dict
+from typing import TypedDict
 
 TipoClaveFavorita = TypedDict(
     'ClaveFavorita', {'nombre': str, 'clave': str, 'pista': str})
