@@ -16,28 +16,28 @@ from src.logica.LogicaCaja import LogicaCaja
 from src.logica.typing import TipoElemento
 
 def gen_id(fake: Faker, vencimiento=None):
-    id = Identificacion()
-    id.nombre = fake.unique.name()
-    id.nota = fake.text()
-    id.numero = str(fake.random_number(digits=fake.random_int(3, 20), fix_len=True))
-    id.nombre_completo = fake.name()
-    id.nacimiento = fake.date_of_birth(minimum_age=18, maximum_age=70)
-    id.expedicion = fake.date_between('-2y', 'now')
-    id.vencimiento = fake.date_between('+4M', '+5y') if vencimiento == None else vencimiento
-    id.caja_id = 1
+    data_id = Identificacion()
+    data_id.nombre = fake.unique.name()
+    data_id.nota = fake.text()
+    data_id.numero = str(fake.random_number(digits=fake.random_int(3, 20), fix_len=True))
+    data_id.nombre_completo = fake.name()
+    data_id.nacimiento = fake.date_of_birth(minimum_age=18, maximum_age=70)
+    data_id.expedicion = fake.date_between('-2y', 'now')
+    data_id.vencimiento = fake.date_between('+4M', '+5y') if vencimiento == None else vencimiento
+    data_id.caja_id = 1
 
     esperado: TipoElemento = {
-        "nombre_elemento": id.nombre,
-        "notas": id.nota,
+        "nombre_elemento": data_id.nombre,
+        "notas": data_id.nota,
         "tipo": "Identificación",
-        "numero": id.numero,
-        "nombre": id.nombre_completo,
-        "fecha_nacimiento": id.nacimiento.isoformat(),
-        "fecha_exp": id.expedicion.isoformat(),
-        "fecha_venc": id.vencimiento.isoformat(),
+        "numero": data_id.numero,
+        "nombre": data_id.nombre_completo,
+        "fecha_nacimiento": data_id.nacimiento.isoformat(),
+        "fecha_exp": data_id.expedicion.isoformat(),
+        "fecha_venc": data_id.vencimiento.isoformat(),
     }
 
-    return (id, esperado)
+    return (data_id, esperado)
 
 class IdentificacionTestCase(unittest.TestCase):
     def setUp(self):
@@ -206,11 +206,11 @@ class IdentificacionTestCase(unittest.TestCase):
 
     # Prueba para verificar que al crear una ID se ha guardado en el base de datos
     def test_agregar_id_db(self):
-        id = self.test_data[0][0]
+        data_id = self.test_data[0][0]
 
         self.logica.crear_id(
-             id.nombre, id.numero, id.nombre_completo, id.nacimiento.isoformat(),
-            id.expedicion.isoformat(), id.vencimiento.isoformat(),id.nota)
+            data_id.nombre, data_id.numero, data_id.nombre_completo, data_id.nacimiento.isoformat(),
+            data_id.expedicion.isoformat(), data_id.vencimiento.isoformat(), data_id.nota)
 
         elementos = self.session.query(Elemento).all()
         self.assertEqual(1, len(elementos))
