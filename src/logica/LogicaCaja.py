@@ -77,7 +77,7 @@ class LogicaCaja(FachadaCajaDeSeguridad):
 
         self.caja = caja
 
-    def dar_claveMaestra(self) -> str:
+    def dar_clave_maestra(self) -> str:
         ''' Retorna la clave maestra de la caja de seguridad
         Rertorna:
             (string): La clave maestra de la caja de seguridad

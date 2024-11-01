@@ -11,7 +11,7 @@ from .VistaSeleccionElemento import VistaSeleccionElemento
 from .VistaTarjeta import VistaTarjeta
 
 
-class App_CajaDeSeguridad(QApplication):
+class AppCajaDeSeguridad(QApplication):
     """
     Clase principal de la interfaz que coordina las diferentes vistas/ventanas de la aplicación
     """
@@ -20,7 +20,7 @@ class App_CajaDeSeguridad(QApplication):
         """
         Constructor de la interfaz. Debe recibir la lógica e iniciar la aplicación en la ventana principal.
         """
-        super(App_CajaDeSeguridad, self).__init__(sys_argv)
+        super(AppCajaDeSeguridad, self).__init__(sys_argv)
 
         self.logica = logica
         self.mostrar_vista_clave_maestra()
@@ -31,7 +31,7 @@ class App_CajaDeSeguridad(QApplication):
         Esta función inicializa la ventana de la clave maestra
         """
         self.vista_clave_maestra = VistaClaveMaestra(self)
-        self.vista_clave_maestra.mostrar_clave(self.logica.dar_claveMaestra())
+        self.vista_clave_maestra.mostrar_clave(self.logica.dar_clave_maestra())
 
     def mostrar_vista_lista_elementos(self):
         """

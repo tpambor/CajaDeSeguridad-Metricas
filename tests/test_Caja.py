@@ -27,6 +27,6 @@ class CajaTestCase(unittest.TestCase):
     def test_clave_maestra(self):
         clave = self.session.query(Caja).first().clave_maestra
 
-        self.assertEqual(clave,self.logica.dar_claveMaestra())
+        self.assertEqual(clave,self.logica.dar_clave_maestra())
 
 

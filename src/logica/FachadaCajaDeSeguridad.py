@@ -58,7 +58,7 @@ class FachadaCajaDeSeguridad:
         '''
         raise NotImplementedError(ERROR_NO_IMPLEMENTADO)
 
-    def dar_claveMaestra(self):
+    def dar_clave_maestra(self):
         ''' Retorna la clave maestra de la caja de seguridad
         Rertorna:
             (string): La clave maestra de la caja de seguridad
