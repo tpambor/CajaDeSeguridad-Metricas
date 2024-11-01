@@ -194,7 +194,7 @@ class ClaveFavoritaTestCase(unittest.TestCase):
     # Prueba para verificar que la clave generada contiene numeros
     def test_generar_clave_numeros(self):
         clave = self.logica.generar_clave()
-        self.assertTrue(re.search("[0-9]", clave))
+        self.assertTrue(re.search(r"\d", clave))
 
     # Prueba para verificar que la clave generada contiene minusculas
     def test_generar_clave_minusculas(self):
